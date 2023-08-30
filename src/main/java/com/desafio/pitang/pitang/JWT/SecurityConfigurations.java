@@ -22,12 +22,20 @@ public class SecurityConfigurations {
     @Autowired
     SecurityFilter securityFilter;
 
+    private static final String[] AUTH_WHITE_LIST = {
+            "/v3/api-docs/**",
+            "/swagger-ui/**",
+            "/v2/api-docs/**",
+            "/swagger-resources/**"
+    };
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         return  httpSecurity
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(AUTH_WHITE_LIST).permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers(HttpMethod.POST, "/api/signin").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/users/me").authenticated()
@@ -53,6 +61,7 @@ public class SecurityConfigurations {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
+        //return (web) -> web.ignoring().requestMatchers("/swagger-ui/**", "/v3/api-docs/**","/h2-console/**" );
         return (web) -> web.ignoring().requestMatchers(new AntPathRequestMatcher("/h2-console/**"));
     }
 
