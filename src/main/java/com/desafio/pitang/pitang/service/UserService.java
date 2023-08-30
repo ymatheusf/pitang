@@ -1,26 +1,33 @@
 package com.desafio.pitang.pitang.service;
 
+import com.desafio.pitang.pitang.entity.Car;
 import com.desafio.pitang.pitang.entity.UserPitang;
 import com.desafio.pitang.pitang.model.UserCreateDto;
 import com.desafio.pitang.pitang.model.UserUpdateDto;
+import com.desafio.pitang.pitang.repository.CarRepository;
 import com.desafio.pitang.pitang.repository.UserRepository;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import java.io.Serializable;
 import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Setter
+@Getter
 public class UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private CarRepository carRepository;
 
     public List<UserPitang> getAllUser(){
         return userRepository.findAll();
@@ -30,7 +37,14 @@ public class UserService {
         if(this.findByLogin(userDto.getLogin()) != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Login already exists");
         if(this.findByEmail(userDto.getEmail()) != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
         UserPitang userPitang = new UserPitang();
-        return new ResponseEntity<>(userRepository.save(userPitang.toEntity(userDto)), HttpStatus.CREATED);
+        userPitang = userRepository.save(userPitang.toEntity(userDto));
+        if(userDto.getCars() != null) {
+            List<Car> cars = userDto.toEntityCars(userDto.getCars(), userPitang);
+            for (Car car : cars) {
+                carRepository.save(car);
+            }
+        }
+        return new ResponseEntity<>(userDto, HttpStatus.CREATED);
     }
     public UserDetails findByLogin(String login){
         return userRepository.findByLogin(login);

@@ -1,11 +1,16 @@
 package com.desafio.pitang.pitang.model;
 
 import com.desafio.pitang.pitang.entity.Car;
+import com.desafio.pitang.pitang.entity.UserPitang;
+import com.desafio.pitang.pitang.service.CarService;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 import java.util.List;
+
+import static org.hibernate.internal.util.collections.CollectionHelper.listOf;
 
 public class UserCreateDto{
     @NotBlank(message = "not.blank")
@@ -23,8 +28,7 @@ public class UserCreateDto{
     @NotBlank(message = "not.blank")
     private String phone;
 
-    private List<Car> cars;
-
+    private List<CarCreateDto> cars;
 
     public String getFistName() {
         return fistName;
@@ -82,12 +86,26 @@ public class UserCreateDto{
         this.phone = phone;
     }
 
-    public List<Car> getCars() {
+    public List<CarCreateDto> getCars() {
         return cars;
     }
 
-    public void setCars(List<Car> cars) {
+    public void setCars(List<CarCreateDto> cars) {
         this.cars = cars;
+    }
+
+    public List<Car> toEntityCars(List<CarCreateDto> carsDto, UserPitang userPitang){
+        List<Car> listCar = listOf();
+        Car car = new Car();
+       for( CarCreateDto carDto : carsDto){
+           car.setColor(carDto.getColor());
+           car.setModel(carDto.getModel());
+           car.setAno(carDto.getYear());
+           car.setLicensePlate(carDto.getLicensePlate());
+           car.setUserPitangId(userPitang);
+           listCar.add(car);
+        }
+       return listCar;
     }
 
 }

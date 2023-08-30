@@ -6,6 +6,8 @@ import com.desafio.pitang.pitang.model.CarCreateDto;
 import com.desafio.pitang.pitang.model.CarUpdateDto;
 import com.desafio.pitang.pitang.model.UserReturnDto;
 import com.desafio.pitang.pitang.repository.CarRepository;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@Getter
+@Setter
 public class CarService {
     @Autowired
     CarRepository carRepository;

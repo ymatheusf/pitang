@@ -61,10 +61,10 @@ public class UserPitang implements UserDetails {
         userPitang.setLogin(userDto.getLogin());
         userPitang.setPassword(userDto.getPassword());
         userPitang.setPhone(userDto.getPhone());
-
-
         return userPitang;
     }
+
+
 
     public Long getId() {
         return id;
@@ -180,7 +180,7 @@ public class UserPitang implements UserDetails {
         return cars;
     }
 
-    public void setCars(Set<Car> cars) {
-        this.cars = cars;
+    public void setCars(List<Car> cars) {
+        this.cars.addAll(cars);
     }
 }
