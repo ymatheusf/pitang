@@ -51,7 +51,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetAllUsers_ReturnsUsersList() {
+    public void testGetAllUsers_ReturnsUsersList() throws Exception {
         List<UserPitang> usersList = new ArrayList<>();
         usersList.add(new UserPitang());
 
@@ -64,7 +64,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetAllUsers_NoUsers_ReturnsNoContent() {
+    public void testGetAllUsers_NoUsers_ReturnsNoContent() throws Exception {
         when(userServiceMock.getAllUser()).thenReturn(new ArrayList<>());
 
         ResponseEntity<?> response = userController.getAllUsers();

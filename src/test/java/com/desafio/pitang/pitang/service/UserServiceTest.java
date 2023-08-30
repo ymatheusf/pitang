@@ -25,7 +25,7 @@ public class UserServiceTest {
 
 
     @Test
-    public void testSave_NewUser_Success() {
+    public void testSave_NewUser_Success() throws Exception {
         userService.setUserRepository(userRepositoryMock);
 
         UserCreateDto newUserDto = new UserCreateDto();

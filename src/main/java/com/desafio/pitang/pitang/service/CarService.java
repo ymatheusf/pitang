@@ -67,9 +67,9 @@ public class CarService {
         return carRepository.findByLicensePlate(licensePlate);
     }
 
-    public ResponseEntity<?> save(CarCreateDto request, String login) {
+    public ResponseEntity<?> save(CarCreateDto request, String login) throws Exception {
         if (this.findByLicensePlate(request.getLicensePlate()) != null)
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("License Plate already exists");
+            throw new Exception("License Plate already exists");
         UserPitang user = userService.getByLogin(login);
         return new ResponseEntity<>(carRepository.save(this.toEntity(request, user)), HttpStatus.CREATED);
     }

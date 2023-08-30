@@ -33,9 +33,9 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public ResponseEntity<?> save(UserCreateDto userDto){
-        if(this.findByLogin(userDto.getLogin()) != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Login already exists");
-        if(this.findByEmail(userDto.getEmail()) != null) return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Email already exists");
+    public ResponseEntity<?> save(UserCreateDto userDto) throws Exception{
+        if(this.findByLogin(userDto.getLogin()) != null) throw new Exception("Login already exists");
+        if(this.findByEmail(userDto.getEmail()) != null) throw new Exception("Email already exists");
         UserPitang userPitang = new UserPitang();
         userPitang = userRepository.save(userPitang.toEntity(userDto));
         if(userDto.getCars() != null) {

@@ -43,7 +43,7 @@ public class CarControllerTest {
     }
 
     @Test
-    public void testSave_ValidCar_ReturnsCreated() {
+    public void testSave_ValidCar_ReturnsCreated() throws Exception {
         CarCreateDto carDto = new CarCreateDto();
 
         when(securityFilterMock.recoverToken(requestMock)).thenReturn("valid_token");

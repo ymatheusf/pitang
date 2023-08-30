@@ -33,23 +33,18 @@ public class UserController {
     CarService carService;
 
     @PostMapping
-    public ResponseEntity<?> save(@RequestBody @Valid UserCreateDto user) {
-        try {
+    public ResponseEntity<?> save(@RequestBody @Valid UserCreateDto user) throws Exception {
             user.setPassword(new BCryptPasswordEncoder().encode(user.getPassword()));
             return userService.save(user);
-        } catch (Exception e) {
-            return ResponseEntity
-                    .status(HttpStatus.BAD_REQUEST)
-                    .body("Error ao Criar Usuário ");
-        }
+
     }
 
     @GetMapping
-    public ResponseEntity<?> getAllUsers() {
+    public ResponseEntity<?> getAllUsers() throws Exception{
         try {
             List<UserPitang> list = userService.getAllUser();
             if (list.isEmpty()) {
-                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+                throw new Exception("Nenhum Usuário Registrado");
             }
             return new ResponseEntity<>(list, HttpStatus.OK);
         } catch (Exception e) {
