@@ -23,6 +23,9 @@ public class UserCreateDto{
     @NotBlank(message = "not.blank")
     private String phone;
 
+    private List<Car> cars;
+
+
     public String getFistName() {
         return fistName;
     }
@@ -87,5 +90,4 @@ public class UserCreateDto{
         this.cars = cars;
     }
 
-    private List<Car> cars;
 }

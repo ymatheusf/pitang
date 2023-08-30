@@ -6,6 +6,8 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 
@@ -22,13 +24,14 @@ public class Car {
     private Long id;
 
     @Column(name = "create_at",nullable = false)
-    @CreatedDate
+    @CreationTimestamp
     private Date createdAt;
 
     @Column(name = "update_at",nullable = false)
-    @LastModifiedDate
+    @UpdateTimestamp
     private Date updateAt;
     private Long ano;
+    @Column(nullable = false, unique = true)
     private String licensePlate;
     private String model;
     private String color;

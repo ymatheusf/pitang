@@ -2,6 +2,8 @@ package com.desafio.pitang.pitang.entity;
 
 
 import com.desafio.pitang.pitang.model.UserCreateDto;
+import com.desafio.pitang.pitang.model.UserReturnDto;
+import com.desafio.pitang.pitang.repository.CarRepository;
 import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -9,13 +11,11 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Table(name = "table_user")
 @Entity
